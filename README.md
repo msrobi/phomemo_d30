@@ -6,11 +6,12 @@ Notes on this fork
 - Added support for generating a QRCode image ("fruit" option is not supported with this mode)
 - "show" mode that does not require a connection to the label printer (uses matplotlib for displaying images and pygame for rotating images)
 
-TODO
+TODO (in no particular order)
 
 - Center text vertically on the label after it is generated
 - "cable" mode (print multiple copies of text on short side to allow wrapping around cables)
 - "image" option to allow inclusion of a B&W image on the label (such as a logo)
+- Add support for 2D barcodes below text
 
 # Acknowledgements
 Based on [phomemo-tools](https://github.com/vivier/phomemo-tools) by Laurent Vivier and
@@ -61,7 +62,7 @@ Generating QRCodes
 venv/bin/python print_text.py "Hello World!" --qrcode "https://github.com/msrobi/phomemo_d30"
 ```
 
-Displaying Labels
+Displaying Labels (does not print the generated image)
 ```bash
 venv/bin/python print_text.py "Hello World!" --qrcode "https://github.com/msrobi/phomemo_d30" --show
 ```
