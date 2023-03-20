@@ -5,12 +5,12 @@ Notes on this fork
 
 - Added support for generating a QRCode image ("fruit" option is not supported with this mode)
 - "show" mode that does not require a connection to the label printer (uses matplotlib for displaying images and pygame for rotating images)
+- "image" option to allow inclusion of a B&W image on the label (such as a logo)
 
 TODO (in no particular order)
 
 - Center text vertically on the label after it is generated
 - "cable" mode (print multiple copies of text on short side to allow wrapping around cables)
-- "image" option to allow inclusion of a B&W image on the label (such as a logo)
 - Add support for 2D barcodes below text
 
 # Acknowledgements
@@ -60,6 +60,11 @@ venv/bin/python print_text.py "First line\nSecond line"
 Generating QRCodes
 ```bash
 venv/bin/python print_text.py "Hello World!" --qrcode "https://github.com/msrobi/phomemo_d30"
+```
+
+Adding external images
+```bash
+venv/bin/python print_text.py "Hello World!" --image logo.png
 ```
 
 Displaying Labels (does not print the generated image)

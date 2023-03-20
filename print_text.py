@@ -15,11 +15,12 @@ import os
 @click.option('--show', is_flag=True, show_default=True, default=False,
               help='Show output, will not print')
 @click.option('--qrcode', default="", help='Text for QR Code')
-def main(text, font, fruit, qrcode, show):
+@click.option('--image', default="", help='Path for B&W image (will be resized to fit)')
+def main(text, font, fruit, qrcode, image, show):
     if not show:
       port = serial.Serial("/dev/rfcomm1", timeout=10)
 
-    filename = generate_image(text, font, fruit, qrcode, show, "temp.png")
+    filename = generate_image(text, font, fruit, qrcode, image, show, "temp.png")
     if not show:
       header(port)
     if show:
@@ -29,7 +30,9 @@ def main(text, font, fruit, qrcode, show):
     if not show:
       print_image(port, filename)
     os.remove(filename)
-    if qrcode:
+    if image:
+        os.remove("ext_img.png")
+    elif qrcode:
         os.remove("qrcode.png")
 
 
@@ -50,10 +53,12 @@ def header(port):
         port.flush()
 
 
-def generate_image(text, font, fruit, qrcode, show, filename):
+def generate_image(text, font, fruit, qrcode, image, show, filename):
     font = Font(path=font)
     if fruit:
         width, height = 240, 80
+    elif image:
+        width, height = 224, 80
     elif qrcode:
         generate_qrcode(qrcode, "qrcode.png")
         width, height = 224, 80
@@ -69,6 +74,13 @@ def generate_image(text, font, fruit, qrcode, show, filename):
         img.gravity = "center"
         if fruit:
             img.extent(width=320, height=96, x=-60)
+        elif image:
+            img.extent(width=320, height=96, x=-96)
+            ext_img = PIL.Image.open(image)
+            img_resize = ext_img.resize((80,80), PIL.Image.Resampling.LANCZOS)
+            img_resize.save("ext_img.png")
+            ext_img=Image(filename="ext_img.png")
+            img.composite(ext_img, left=8, top=8)
         elif qrcode:
             img.extent(width=320, height=96, x=-96)
             qr_img=Image(filename="qrcode.png")
@@ -94,8 +106,8 @@ def generate_qrcode(text, filename):
 
     img = qr.make_image(fill_color="black", back_color="white")
     img.save(filename) 
-    image = PIL.Image.open(filename)
-    img_resize = image.resize((80,80), PIL.Image.Resampling.LANCZOS)
+    img = PIL.Image.open(filename)
+    img_resize = img.resize((80,80), PIL.Image.Resampling.LANCZOS)
     img_resize.save(filename)
 
 
@@ -104,8 +116,8 @@ def show_image(filename):
     import matplotlib.image as mpimg
     import pygame
 
-    image = pygame.image.load(filename)
-    rot_img = pygame.transform.rotate(image, 270)
+    img = pygame.image.load(filename)
+    rot_img = pygame.transform.rotate(img, 270)
     pygame.image.save(rot_img, "preview.png")
     plt.imshow(mpimg.imread('preview.png'))
     plt.show()
@@ -116,13 +128,13 @@ def print_image(port, filename):
     width = 96
 
     with Image.open(filename) as src:
-        image = image_helper.preprocess_image(src, width)
+        img = image_helper.preprocess_image(src, width)
 
     # printer initialization sniffed from Android app "Print Master"
     output = '1f1124001b401d7630000c004001'
 
     # adapted from https://github.com/theacodes/phomemo_m02s/blob/main/phomemo_m02s/printer.py
-    for chunk in image_helper.split_image(image):
+    for chunk in image_helper.split_image(img):
         output = bytearray.fromhex(output)
 
         bits = image_helper.image_to_bits(chunk)
