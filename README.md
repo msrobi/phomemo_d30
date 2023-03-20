@@ -1,9 +1,21 @@
 # phomemo_d30
 Python script to print text on a Phomemo D30 label printer
 
+Notes on this fork
+
+- Added support for generating a QRCode image ("fruit" option is not supported with this mode)
+- "show" mode that does not require a connection to the label printer (uses matplotlib for displaying images and pygame for rotating images)
+
+TODO
+
+- Center text vertically on the label after it is generated
+- "cable" mode (print multiple copies of text on short side to allow wrapping around cables)
+- "image" option to allow inclusion of a B&W image on the label (such as logos)
+
 # Acknowledgements
 Based on [phomemo-tools](https://github.com/vivier/phomemo-tools) by Laurent Vivier and
-[phomemo_m02s](https://github.com/theacodes/phomemo_m02s) by theacodes.
+[phomemo_m02s](https://github.com/theacodes/phomemo_m02s) by theacodes and
+[phomemo_d30](https://github.com/polskafan/phomemo_d30) by polskafan.
 
 # Example
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=U1ZqjYgFxjY
@@ -42,6 +54,16 @@ venv/bin/python print_text.py --font Arial.ttf "Hello World!"
 Multiline Labels
 ```bash
 venv/bin/python print_text.py "First line\nSecond line"
+```
+
+Generating QRCodes
+```bash
+venv/bin/python print_text.py "Hello World!" --qrcode "https://github.com/msrobi/phomemo_d30"
+```
+
+Displaying Labels
+```bash
+venv/bin/python print_text.py "Hello World!" --qrcode "https://github.com/msrobi/phomemo_d30" --show
 ```
 
 ## Reverse engineering steps
