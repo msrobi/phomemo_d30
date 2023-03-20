@@ -10,7 +10,7 @@ TODO
 
 - Center text vertically on the label after it is generated
 - "cable" mode (print multiple copies of text on short side to allow wrapping around cables)
-- "image" option to allow inclusion of a B&W image on the label (such as logos)
+- "image" option to allow inclusion of a B&W image on the label (such as a logo)
 
 # Acknowledgements
 Based on [phomemo-tools](https://github.com/vivier/phomemo-tools) by Laurent Vivier and
