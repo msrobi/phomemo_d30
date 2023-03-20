@@ -3,9 +3,9 @@ Python script to print text on a Phomemo D30 label printer
 
 Notes on this fork
 
-- Added support for generating a QRCode image ("fruit" option is not supported with this mode)
+- Added support for generating a QRCode image. "fruit" and "image" options are not supported with this mode.
+- "image" option to allow inclusion of a B&W image on the label (such as a logo), "fruit" and "qrcode" options are not supported.
 - "show" mode that does not require a connection to the label printer (uses matplotlib for displaying images and pygame for rotating images)
-- "image" option to allow inclusion of a B&W image on the label (such as a logo)
 
 TODO (in no particular order)
 
