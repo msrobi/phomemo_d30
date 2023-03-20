@@ -25,7 +25,7 @@ alt="Video example of the Python script" width="640" /></a>
 
 # Checkout and install
 ```bash
-git clone https://github.com/polskafan/phomemo_d30.git
+git clone https://github.com/msrobi/phomemo_d30.git
 cd phomemo_d30
 python3 -m venv venv
 venv/bin/pip install -r requirements.txt
